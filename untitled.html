@@ -1,0 +1,70 @@
+<?php
+// define variables and set to empty values
+$nameErr = $priceErr = $thumbnailErr = $cat_idErr = "";
+$name = $price = $thumbnail = $description = $cat_id = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   if (empty($_POST["name"])) {
+     $nameErr = "Name is required";
+   } else {
+     $name = test_input($_POST["name"]);
+     // check if name only contains letters and whitespace
+     if (!preg_match("/^[a-zA-Z ]*$/",$name)) {
+       $nameErr = "Only letters and white space allowed"; 
+     }
+   }
+   
+   if (empty($_POST["price"])) {
+     $priceErr = "Email is required";
+   } else {
+     $price = test_input($_POST["price"]);
+     // check if e-mail address is well-formed
+   }
+     
+   if (empty($_POST["thumbnail"])) {
+     $thumbnail = "";
+   } else {
+     $thumbnail = test_input($_POST["thumbnail"]);
+     // check if URL address syntax is valid (this regular expression also allows dashes in the URL)
+   }
+
+   if (empty($_POST["description"])) {
+     $description = "";
+   } else {
+     $comment = test_input($_POST["description"]);
+   }
+
+}
+
+function test_input($data) {
+   $data = trim($data);
+   $data = stripslashes($data);
+   $data = htmlspecialchars($data);
+   return $data;
+}
+?>
+
+<form method="post" action="index.php?page=enterdocument2"> 
+   Name: <input type="text" name="name" >
+   <br><br>
+   Price: <input type="text" name="price">
+   <br><br>
+   Thumbnail: <input type="text" name="thumbnail" >
+   <br><br>
+   Description: <textarea name="description" rows="5" cols="40"></textarea>
+   <br><br>
+  
+</form>
+
+<?php
+echo "<h2>Your Input:</h2>";
+echo $name;
+echo "<br>";
+echo $email;
+echo "<br>";
+echo $website;
+echo "<br>";
+echo $comment;
+echo "<br>";
+echo $gender;
+?>
